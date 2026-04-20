@@ -1,0 +1,18 @@
+name: solar-system-ci
+on:
+  push:
+    branches: [main,feat]
+jobs:
+    unit-testing:
+        runs-on: ubuntu-latest
+        steps:
+            -name: Checkout code
+             uses: actions/checkout@v6
+            -name: set up nodejs
+             uses: actions/setup-node@v6
+             with:
+                node-version: 18
+            -name: install dependencies
+             run: npm install
+            -name: run tests
+             run: npm test
