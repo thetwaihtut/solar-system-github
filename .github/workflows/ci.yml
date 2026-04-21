@@ -28,6 +28,7 @@ jobs:
           - name: run tests
             run: npm test
           - name: uploading artifacts
+            if: always()
             uses: actions/upload-artifact@v7
             with:
                 name: my-artifact
