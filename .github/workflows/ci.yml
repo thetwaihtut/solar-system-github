@@ -81,7 +81,7 @@ jobs:
             with:
               context: .
               push: false
-              tags: ${{ vars.docker_username }}/solar-system-app:$${{ github.sha }}
+              tags: ${{ vars.docker_username }}/solar-system-app:${{ github.sha }}
 
           - name: docker test
             run: |
