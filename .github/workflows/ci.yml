@@ -66,7 +66,7 @@ jobs:
                 path: coverage/
                 retention-days: 5
     
-    docker-login:
+    docker:
         needs: [unit-testing, code-coverage]
         runs-on: ubuntu-latest
         steps:
@@ -81,7 +81,7 @@ jobs:
           # - name: Set up Docker Buildx
           #   uses: docker/setup-buildx-action@v4
         
-          - name: Build and push Docker image
+          - name: Build Docker image
             uses: docker/build-push-action@v7
             with:
               context: .
@@ -100,3 +100,10 @@ jobs:
             
               echo "testing docker container..."
               wget -q -O - 127.0.0.1:3000/live | grep live
+          
+          - name: push Docker image
+            uses: docker/build-push-action@v7
+            with:
+              context: .
+              push: true
+              tags: ${{ vars.docker_username }}/solar-system-app:${{ github.sha }}
