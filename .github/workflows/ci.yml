@@ -99,4 +99,4 @@ jobs:
               --rm ${{ vars.docker_username }}/solar-system-app:${{ github.sha }}
             
               echo "testing docker container..."
-              wget -qO 127.0.0.1:3000/live | grep live
+              wget -q -O - 127.0.0.1:3000/live | grep live
