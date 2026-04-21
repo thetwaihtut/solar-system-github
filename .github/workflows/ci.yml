@@ -96,7 +96,7 @@ jobs:
               -e MONGO_URI=$MONGO_URI \
               -e MONGO_USERNAME=${{ env.MONGO_USERNAME }} \
               -e MONGO_PASSWORD=${{ env.MONGO_PASSWORD }} \
-              --rm ${{ vars.docker_username }}/solar-system-app:$${{ github.sha }}
+              --rm ${{ vars.docker_username }}/solar-system-app:${{ github.sha }}
             
               echo "testing docker container..."
               wget -qO 127.0.0.1:3000/live | grep live
