@@ -177,12 +177,12 @@ jobs:
         - name: testing replac token
           uses: cschleiden/replace-tokens@v1
           with:
-            tokenPrefix: '{'
+            tokenPrefix: '${'
             tokenSuffix: '}'
             files: '["kubernetes/development/*.yaml"]'
           env:
-            NAMESPACE: ${{vars.NAMESPACE}}
-            REPLICAS: ${{vars.REPLICAS}}
+            NAMESPACE: testing
+            REPLICAS: 3
             K8S_IMAGE: ${{ vars.docker_username }}/solar-system-app:${{ github.sha }}
         
         - name: check files after token replacement
