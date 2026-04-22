@@ -173,4 +173,12 @@ jobs:
           run: |
             kubectl version
             kubectl get nodes
+        
+        - name: replace variables in deployment.yaml
+          run: |
+            sed -i 's/${NAMESPACE}/dev/g' ./kubernetes/development/*.yaml
+            sed -i 's/${REPLICAS}/2/g' ./kubernetes/development/*.yaml
+            sed -i 's|${K8S_IMAGE}|'"${{ vars.docker_username }}/solar-system-app:${{ github.sha }}"'|g' ./kubernetes/development/deployment.yaml\
+            cat ./kubernetes/development/deployment.yaml
+            
 
