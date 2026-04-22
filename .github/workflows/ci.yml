@@ -137,6 +137,7 @@ jobs:
     #             ghcr.io/${{ github.repository_owner }}/solar-system-app:${{ github.sha }}
     
     dev-deploy:
+      
       # needs: docker
       runs-on: ubuntu-latest
       steps:
@@ -146,14 +147,23 @@ jobs:
           uses: azure/setup-kubectl@v4
           with:
             version: 'v1.34.0'
-        - name: set up kubeconfig
-          uses: azure/k8s-set-context@v5
+        # - name: set up kubeconfig
+        #   uses: azure/k8s-set-context@v5
+        #   with:
+        #       method: kubeconfig
+        #       kubeconfig: ${{ secrets.KUBECONFIG }}
+        # - name: checking k8s details
+        #   run: |
+        #     kubectl version
+        #     kubectl get nodes
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v3
           with:
-              method: kubeconfig
-              kubeconfig: ${{ secrets.KUBECONFIG }}
-        - name: checking k8s details
+            role-to-assume: arn:aws:iam::213113978019:role/github-oidc-role
+            aws-region: ap-southeast-1
+
+        - name: cheking k8s
           run: |
             kubectl version
             kubectl get nodes
 
-            
