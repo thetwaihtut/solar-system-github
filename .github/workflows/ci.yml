@@ -153,5 +153,5 @@ jobs:
               kubeconfig: ${{ secrets.KUBECONFIG }}
         - name: checking k8s details
           run: |
-            kubectl version --short
+            kubectl version
             kubectl get nodes
