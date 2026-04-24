@@ -213,9 +213,9 @@ jobs:
             kubectl apply -f kubernetes/development/service.yaml 
         
         - name: url
-          id: get-url  # step 1
+          id: get-url  # step 1 and 2
           run: |
-            echo "ADDRESS=$(kubectl get svc solar-system -n testing -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')" >> "$GITHUB_OUTPUT"   #step 2
+            echo "ADDRESS=$(kubectl get svc solar-system -n testing -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')" >> "$GITHUB_OUTPUT"
 
     
     integration-testing:
