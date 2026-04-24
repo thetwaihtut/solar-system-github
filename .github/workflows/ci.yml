@@ -190,10 +190,19 @@ jobs:
             cat kubernetes/development/deployment.yaml
             cat kubernetes/development/service.yaml
         
-        # - name: create mongo secret (already created in cluster, so this step is commented out to avoid error)
+        # - name: Create Mongo Secret (already created in cluster, so skipping this step)
         #   run: |
-        #     kubectl create secret generic mongo-db-creds --from-literal=MONGO_URI=${{ secrets.MONGO_URI }} \
-        #     --from-literal=MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} -n testing
+        #     cat <<EOF | kubectl apply -f -
+        #     apiVersion: v1
+        #     kind: Secret
+        #     metadata:
+        #       name: mongo-secret
+        #     type: Opaque
+        #     stringData:
+        #       MONGO_URI: "mongodb+srv://supercluster.d83jj.mongodb.net/superData"
+        #       MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+        #       MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+        #     EOF
  
         - name: deploy to dev kubernetes
           run: |
