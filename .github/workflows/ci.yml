@@ -81,7 +81,7 @@ jobs:
     #             path: coverage/
     #             retention-days: 5
     
-    # docker:
+    #  docker:
     #     permissions:
     #       contents: read
     #       packages: write
@@ -167,14 +167,14 @@ jobs:
         
         - name: Set up kubeconfig
           run: |
-            aws eks update-kubeconfig --name eks-learning-cluster --region ap-southeast-1
+            aws eks update-kubeconfig --name attractive-lofi-dolphin --region ap-southeast-1
 
         - name: cheking k8s
           run: |
             kubectl version
             kubectl get nodes
         
-        - name: testing replac token
+        - name: testing replace token
           uses: cschleiden/replace-tokens@v1
           with:
             tokenPrefix: '${'
@@ -189,4 +189,10 @@ jobs:
           run: |
             cat kubernetes/development/deployment.yaml
             cat kubernetes/development/service.yaml
+        
+        # - name: create mongo secret
+        #   run: |
+        #     kubectl create secret generic mongo-db-creds --from-literal=MONGO_URI=${{ secrets.MONGO_URI }} \
+        #     --from-literal=MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} -n testing
+
 
