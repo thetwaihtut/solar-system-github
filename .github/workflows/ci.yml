@@ -194,5 +194,9 @@ jobs:
         #   run: |
         #     kubectl create secret generic mongo-db-creds --from-literal=MONGO_URI=${{ secrets.MONGO_URI }} \
         #     --from-literal=MONGO_USERNAME=${{ secrets.MONGO_USERNAME }} --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} -n testing
-
+ 
+        - name: deploy to dev kubernetes
+          run: |
+            kubectl apply -f kubernetes/development/deployment.yaml 
+            kubectl apply -f kubernetes/development/service.yaml 
 
