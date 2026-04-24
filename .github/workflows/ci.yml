@@ -239,7 +239,7 @@ jobs:
     
     prod-deploy: 
       if: contains(github.ref, 'main')
-      needs: dev-integration-testing
+      needs: docker
       environment:
         name: prod
         url: https://${{ steps.get-url.outputs.ADDRESS }}
