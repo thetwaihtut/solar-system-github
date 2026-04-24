@@ -236,6 +236,7 @@ jobs:
             curl http://$URL/live -s -k  | jq -r .status | grep -i live
     
     prod-deploy: 
+      needs: dev-integration-testing
       environment:
         name: prod
         url: https://${{ steps.get-url.outputs.ADDRESS }}
@@ -246,7 +247,6 @@ jobs:
         contents: read
         id-token: write
         deployments: write
-      needs: docker
       runs-on: ubuntu-latest
       steps:
         - name: Checkout code
