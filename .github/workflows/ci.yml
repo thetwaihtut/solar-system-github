@@ -136,7 +136,10 @@ jobs:
                 ${{ vars.docker_username }}/solar-system-app:${{ github.sha }}
               # ghcr.io/${{ github.repository_owner }}/solar-system-app:${{ github.sha }}
     
-    dev-deploy:
+    dev-deploy: 
+      #step 3
+      outputs:
+        ingress_url: ${{ steps.get-url.outputs.ADDRESS }}
       permissions:
         contents: read
         id-token: write
@@ -208,4 +211,23 @@ jobs:
           run: |
             kubectl apply -f kubernetes/development/deployment.yaml 
             kubectl apply -f kubernetes/development/service.yaml 
+        
+        - name: url
+          id: get-url  # step 1
+          run: |
+            echo "ADDRESS=$(kubectl get svc solar-system -n ${{vars.NAMESPACE}} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')" >> "$GITHUB_OUTPUT"   #step 2
 
+    
+    integration-testing:
+      needs: dev-deploy
+      runs-on: ubuntu-latest
+      steps:
+
+        - name: test url ouput 
+            #step 4
+          env:
+            URL: ${{ needs.dev-deploy.outputs.ingress_url }}
+          run: |
+            echo $URL
+            echo "testing integration..."
+            curl http://$URL/live -s -k  | jq -r .status | grep -i live
