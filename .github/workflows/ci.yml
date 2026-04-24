@@ -215,7 +215,7 @@ jobs:
         - name: url
           id: get-url  # step 1 and 2
           run: |
-            echo "ADDRESS=$(kubectl get svc solar-system -n testing -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')" >> "$GITHUB_OUTPUT"
+            echo "ADDRESS=$(kubectl get ingress solar-system-ingress -n testing -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')" >> "$GITHUB_OUTPUT"
 
     
     integration-testing:
